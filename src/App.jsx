@@ -6,6 +6,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import VerifyEmailPage from './pages/VerifyEmailPage'
 import VerifyEmailSuccessPage from './pages/VerifyEmailSuccessPage'
 import OpenAppPage from './pages/OpenAppPage'
+import ChooseAppPage from './pages/ChooseAppPage'
 import DashboardPage from './pages/DashboardPage'
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
       <Route path="/verify-email"         element={<VerifyEmailPage />} />
       <Route path="/verify-email/success" element={<VerifyEmailSuccessPage />} />
       <Route path="/open-app"             element={<OpenAppPage />} />
+      <Route path="/choose-app"           element={<ChooseAppPage />} />
       <Route path="/dashboard"            element={<DashboardPage />} />
     </Routes>
   )
