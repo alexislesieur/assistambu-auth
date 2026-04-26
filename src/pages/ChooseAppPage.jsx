@@ -29,15 +29,14 @@ export default function ChooseAppPage() {
 
   if (!user) return null
 
-  const isAdmin = user.role === 'admin'
+  const isAdminOrSuperAdmin = ['admin', 'superadmin'].includes(user.role)
 
   return (
     <div style={{
       minHeight: '100vh', background: '#F0F2F5',
       display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center',
-      padding: '24px',
-      fontFamily: "'DM Sans', sans-serif",
+      padding: '24px', fontFamily: "'DM Sans', sans-serif",
       boxSizing: 'border-box',
     }}>
       <div style={{ width: '100%', maxWidth: 420 }}>
@@ -64,10 +63,16 @@ export default function ChooseAppPage() {
           <div style={{ fontSize: 13, color: '#8694A7' }}>
             Bonjour, <strong style={{ color: '#0A1E3D' }}>{user.name}</strong> 👋
           </div>
+          {user.role === 'superadmin' && (
+            <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, background: '#F0E6F6', borderRadius: 20, padding: '3px 10px' }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E44AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#8E44AD' }}>Super Admin</span>
+            </div>
+          )}
         </div>
 
-        {/* Admin — deux choix */}
-        {isAdmin && (
+        {/* Admin / SuperAdmin — deux choix */}
+        {isAdminOrSuperAdmin && (
           <>
             <p style={{ textAlign: 'center', fontSize: 14, color: '#4A5568', marginBottom: 20, lineHeight: 1.5 }}>
               Où souhaitez-vous aller ?
@@ -103,15 +108,9 @@ export default function ChooseAppPage() {
         )}
 
         {/* User classique — message app mobile */}
-        {!isAdmin && (
+        {!isAdminOrSuperAdmin && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-
-            {/* Carte app mobile — bientôt dispo */}
-            <div style={{
-              background: '#fff', borderRadius: 16, padding: '20px',
-              border: '1.5px solid #E8ECF0',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-            }}>
+            <div style={{ background: '#fff', borderRadius: 16, padding: '20px', border: '1.5px solid #E8ECF0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: '#F0F2F5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B0BFCC" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -130,27 +129,16 @@ export default function ChooseAppPage() {
                 🚑 L'application AssistAmbu pour iPhone et Android est en cours de développement. Vous serez notifié par email dès son lancement.
               </div>
             </div>
-
-            {/* Lien waitlist */}
             <div style={{ textAlign: 'center', fontSize: 13, color: '#8694A7', marginTop: 4 }}>
               En attendant, parlez-en à vos collègues !{' '}
-              <a href="https://assist-ambu.fr" style={{ color: '#2E86C1', fontWeight: 700, textDecoration: 'none' }}>
-                assist-ambu.fr
-              </a>
+              <a href="https://assist-ambu.fr" style={{ color: '#2E86C1', fontWeight: 700, textDecoration: 'none' }}>assist-ambu.fr</a>
             </div>
           </div>
         )}
 
         {/* Déconnexion */}
         <div style={{ textAlign: 'center', marginTop: 28 }}>
-          <button
-            onClick={handleLogout}
-            style={{
-              ...btnBase, width: 'auto', background: 'none', border: 'none',
-              boxShadow: 'none', padding: '8px', fontSize: 13, color: '#8694A7',
-              gap: 6, display: 'inline-flex',
-            }}
-          >
+          <button onClick={handleLogout} style={{ ...btnBase, width: 'auto', background: 'none', border: 'none', boxShadow: 'none', padding: '8px', fontSize: 13, color: '#8694A7', gap: 6, display: 'inline-flex' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8694A7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
               <polyline points="16 17 21 12 16 7"/>

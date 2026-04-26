@@ -27,12 +27,11 @@ export default function LoginPage() {
       const data = await authApi.login({ email, password })
       localStorage.setItem('token', data.token)
 
-      if (data.user?.role === 'admin') {
+      if (['admin', 'superadmin'].includes(data.user?.role)) {
         navigate('/choose-app')
       } else if (data.user?.role === 'beta') {
         window.location.href = `${import.meta.env.VITE_APP_URL || 'https://beta.assist-ambu.fr'}?token=${data.token}`
       } else {
-        // user classique
         navigate('/choose-app')
       }
     } catch (err) {
@@ -77,17 +76,9 @@ export default function LoginPage() {
         </div>
 
         {/* Carte */}
-        <div style={{
-          background: '#fff', borderRadius: 16, padding: '28px 24px',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
-          border: '1px solid #E8ECF0',
-        }}>
+        <div style={{ background: '#fff', borderRadius: 16, padding: '28px 24px', boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)', border: '1px solid #E8ECF0' }}>
           {error && (
-            <div style={{
-              background: '#FDF2F2', border: '1px solid #FACACA',
-              borderRadius: 8, padding: '10px 14px',
-              fontSize: 13, color: '#C0392B', marginBottom: 20,
-            }}>
+            <div style={{ background: '#FDF2F2', border: '1px solid #FACACA', borderRadius: 8, padding: '10px 14px', fontSize: 13, color: '#C0392B', marginBottom: 20 }}>
               {error}
             </div>
           )}
