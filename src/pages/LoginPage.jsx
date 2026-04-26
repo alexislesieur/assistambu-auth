@@ -29,8 +29,11 @@ export default function LoginPage() {
 
       if (data.user?.role === 'admin') {
         navigate('/choose-app')
+      } else if (data.user?.role === 'beta') {
+        window.location.href = `${import.meta.env.VITE_APP_URL || 'https://beta.assist-ambu.fr'}?token=${data.token}`
       } else {
-        window.location.href = `${import.meta.env.VITE_APP_URL || 'https://app.assist-ambu.fr'}?token=${data.token}`
+        // user classique
+        navigate('/choose-app')
       }
     } catch (err) {
       if (err.errors?.email_unverified) {
@@ -79,7 +82,6 @@ export default function LoginPage() {
           boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
           border: '1px solid #E8ECF0',
         }}>
-
           {error && (
             <div style={{
               background: '#FDF2F2', border: '1px solid #FACACA',
@@ -92,11 +94,7 @@ export default function LoginPage() {
 
           <div style={{ marginBottom: 16 }}>
             <label style={{ fontSize: 12, fontWeight: 600, color: '#374151', marginBottom: 6, display: 'block', letterSpacing: '0.02em' }}>Adresse email</label>
-            <input
-              type="email" placeholder="alex@email.com" value={email}
-              onChange={e => setEmail(e.target.value)}
-              style={input}
-            />
+            <input type="email" placeholder="alex@email.com" value={email} onChange={e => setEmail(e.target.value)} style={input} />
           </div>
 
           <div style={{ marginBottom: 12 }}>
